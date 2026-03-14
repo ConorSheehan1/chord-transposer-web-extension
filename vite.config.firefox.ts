@@ -12,9 +12,6 @@ export default mergeConfig(
       crx({
         manifest: {
           ...baseManifest,
-          background: {
-            scripts: [ 'src/pages/background/index.ts' ]
-          },
         } as ManifestV3Export,
         browser: 'firefox',
         contentScripts: {
