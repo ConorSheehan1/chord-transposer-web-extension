@@ -16,10 +16,10 @@ interface TransposeMessage {
 // Listen for messages from the popup
 chrome.runtime.onMessage.addListener((request: any, _sender: any, sendResponse: (response: any) => void) => {
   const msg = request as TransposeMessage;
-  
+
   if (msg.type === 'TRANSPOSE_CHORDS') {
     const semitones = msg.semitones || 0;
-    
+
     // Save original content if not already saved
     if (originalContent.size === 0) {
       const body = document.body;
@@ -29,7 +29,7 @@ chrome.runtime.onMessage.addListener((request: any, _sender: any, sendResponse: 
     // Transpose chords in the document
     const modifiedCount = transposeElement(document.body, semitones);
     console.log(`Transposed ${modifiedCount} text nodes`);
-    
+
     sendResponse({
       success: true,
       message: `Transposed chords by ${semitones} semitones`
@@ -43,7 +43,7 @@ chrome.runtime.onMessage.addListener((request: any, _sender: any, sendResponse: 
         originalContent.clear();
       }
     }
-    
+
     sendResponse({
       success: true,
       message: 'Chords reset to original'

@@ -72,9 +72,9 @@ export function detectChordsInText(text: string): string[] {
   // - Root note (A-G, optionally followed by # or b)
   // - Optional chord suffix (m, 7, maj7, min7, dim, aug, sus2, sus4, add9, etc.)
   const chordPattern = /([A-G](?:[#b])?(?:m(?:aj)?(?:7|9|11|13)?|min|dim|aug|sus[24]|add\d|7(?:b\d|#\d)?|maj\d?)?(?:\/[A-G](?:[#b])?)?)/g;
-  
+
   const chords = text.match(chordPattern) || [];
-  
+
   // Filter out single letters that are likely not chords
   return chords.filter(chord => {
     // Accept if it has a root note and a suffix
@@ -98,7 +98,7 @@ export function transposeText(text: string, semitones: number): string {
   }
 
   const chordPattern = /([A-G](?:[#b])?(?:m(?:aj)?(?:7|9|11|13)?|min|dim|aug|sus[24]|add\d|7(?:b\d|#\d)?|maj\d?)?(?:\/[A-G](?:[#b])?)?)/g;
-  
+
   return text.replace(chordPattern, (match) => transposeChord(match, semitones));
 }
 
@@ -109,9 +109,9 @@ export function transposeText(text: string, semitones: number): string {
  */
 export function formatTransposition(semitones: number): string {
   if (semitones === 0) return 'No transposition';
-  
+
   const direction = semitones > 0 ? 'Up' : 'Down';
   const absValue = Math.abs(semitones);
-  
+
   return `${direction} ${absValue} semitone${absValue !== 1 ? 's' : ''}`;
 }

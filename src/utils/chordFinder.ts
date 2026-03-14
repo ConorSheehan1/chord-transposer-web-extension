@@ -113,7 +113,7 @@ export function highlightChords(element: Element, className: string = 'chord-hig
     const parent = textNode.parentElement;
     if (parent && !SKIP_TAGS.has(parent.tagName)) {
       const text = textNode.textContent || '';
-      
+
       if (CHORD_PATTERN.test(text)) {
         const fragment = document.createDocumentFragment();
         let lastIndex = 0;
