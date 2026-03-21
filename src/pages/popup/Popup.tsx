@@ -16,9 +16,15 @@ export default function Popup() {
         chrome.tabs.sendMessage(tabs[0].id, {
           type: 'TRANSPOSE_CHORDS',
           semitones: transposition
+        }, (response) => {
+          if (chrome.runtime.lastError) {
+            console.error('Error:', chrome.runtime.lastError);
+            setMessage('Content script not loaded. Try refreshing the page.');
+          } else {
+            setMessage('Chords transposed!');
+          }
+          setTimeout(() => setMessage(''), 2000);
         });
-        setMessage('Chords transposed!');
-        setTimeout(() => setMessage(''), 2000);
       }
     });
   };
@@ -28,10 +34,16 @@ export default function Popup() {
       if (tabs[0].id) {
         chrome.tabs.sendMessage(tabs[0].id, {
           type: 'RESET_CHORDS'
+        }, (response) => {
+          if (chrome.runtime.lastError) {
+            console.error('Error:', chrome.runtime.lastError);
+            setMessage('Content script not loaded. Try refreshing the page.');
+          } else {
+            setTransposition(0);
+            setMessage('Chords reset!');
+          }
+          setTimeout(() => setMessage(''), 2000);
         });
-        setTransposition(0);
-        setMessage('Chords reset!');
-        setTimeout(() => setMessage(''), 2000);
       }
     });
   };
