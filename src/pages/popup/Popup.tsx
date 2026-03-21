@@ -12,39 +12,65 @@ export default function Popup() {
     }
 
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0].id) {
-        chrome.tabs.sendMessage(tabs[0].id, {
-          type: 'TRANSPOSE_CHORDS',
-          semitones: transposition
-        }, (response) => {
-          if (chrome.runtime.lastError) {
-            console.error('Error:', chrome.runtime.lastError);
-            setMessage('Content script not loaded. Try refreshing the page.');
-          } else {
-            setMessage('Chords transposed!');
-          }
-          setTimeout(() => setMessage(''), 2000);
-        });
+      console.log('[Popup] Query result:', tabs.length, 'tabs');
+      if (!tabs || tabs.length === 0) {
+        setMessage('No active tab found');
+        setTimeout(() => setMessage(''), 2000);
+        return;
       }
+
+      const tabId = tabs[0].id;
+      if (!tabId) {
+        setMessage('Tab ID not available');
+        setTimeout(() => setMessage(''), 2000);
+        return;
+      }
+
+      console.log('[Popup] Sending message to tab:', tabId);
+
+      chrome.tabs.sendMessage(tabId, {
+        type: 'TRANSPOSE_CHORDS',
+        semitones: transposition
+      }, (response: any) => {
+        console.log('[Popup] Response:', response, 'Error:', chrome.runtime.lastError);
+        if (chrome.runtime.lastError) {
+          console.error('[Popup] Error:', chrome.runtime.lastError);
+          setMessage('Content script not loaded. Try refreshing the page.');
+        } else {
+          setMessage('Chords transposed!');
+        }
+        setTimeout(() => setMessage(''), 2000);
+      });
     });
   };
 
   const handleReset = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0].id) {
-        chrome.tabs.sendMessage(tabs[0].id, {
-          type: 'RESET_CHORDS'
-        }, (response) => {
-          if (chrome.runtime.lastError) {
-            console.error('Error:', chrome.runtime.lastError);
-            setMessage('Content script not loaded. Try refreshing the page.');
-          } else {
-            setTransposition(0);
-            setMessage('Chords reset!');
-          }
-          setTimeout(() => setMessage(''), 2000);
-        });
+      if (!tabs || tabs.length === 0) {
+        setMessage('No active tab found');
+        setTimeout(() => setMessage(''), 2000);
+        return;
       }
+
+      const tabId = tabs[0].id;
+      if (!tabId) {
+        setMessage('Tab ID not available');
+        setTimeout(() => setMessage(''), 2000);
+        return;
+      }
+
+      chrome.tabs.sendMessage(tabId, {
+        type: 'RESET_CHORDS'
+      }, (response: any) => {
+        if (chrome.runtime.lastError) {
+          console.error('[Popup] Error:', chrome.runtime.lastError);
+          setMessage('Content script not loaded. Try refreshing the page.');
+        } else {
+          setTransposition(0);
+          setMessage('Chords reset!');
+        }
+        setTimeout(() => setMessage(''), 2000);
+      });
     });
   };
 
