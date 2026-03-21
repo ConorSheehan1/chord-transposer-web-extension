@@ -158,7 +158,8 @@ export function detectChordsInText(text: string): string[] {
   // - Root note (A-G, optionally followed by single # or b)
   // - Optional chord suffix (m, 7, maj7, min7, dim, aug, sus2, sus4, add9, etc.)
   // - Optional bass note after slash
-  const chordPattern = /\b([A-G](?:[#b])?(?:m(?:aj)?(?:7|9|11|13)?|min|dim|aug|sus[24]|add\d|7(?:b\d|#\d)?|maj\d?)?(?:\/[A-G](?:[#b])?)?)\b/g;
+  // Use lookahead instead of \b at end since # is not a word character
+  const chordPattern = /\b([A-G](?:[#b])?(?:m(?:aj)?(?:7|9|11|13)?|min|dim|aug|sus[24]|add\d|7(?:b\d|#\d)?|maj\d?)?)(?:\/[A-G](?:[#b])?)?(?=\s|$|[^\w#])/g;
 
   const chords = text.match(chordPattern) || [];
 
@@ -189,7 +190,7 @@ export function transposeText(text: string, semitones: number): string {
     return text;
   }
 
-  const chordPattern = /\b([A-G](?:[#b])?(?:m(?:aj)?(?:7|9|11|13)?|min|dim|aug|sus[24]|add\d|7(?:b\d|#\d)?|maj\d?)?(?:\/[A-G](?:[#b])?)?)\b/g;
+  const chordPattern = /\b([A-G](?:[#b])?(?:m(?:aj)?(?:7|9|11|13)?|min|dim|aug|sus[24]|add\d|7(?:b\d|#\d)?|maj\d?)?)(?:\/[A-G](?:[#b])?)?(?=\s|$|[^\w#])/g;
 
   return text.replace(chordPattern, (match) => transposeChord(match, semitones));
 }

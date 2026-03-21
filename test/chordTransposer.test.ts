@@ -6,7 +6,7 @@ import {
   detectChordsInText,
   transposeText,
   formatTransposition,
-} from './chordTransposer.ts';
+} from '../src/utils/chordTransposer.ts';
 
 describe('transposeNote', () => {
   it('should transpose C up by 1 semitone to C#', () => {
@@ -31,6 +31,10 @@ describe('transposeNote', () => {
 
   it('should not transpose when semitones is 0', () => {
     assert.strictEqual(transposeNote('D', 0), 'D');
+  });
+
+  it('should transpose A# up by 1 semitone to B', () => {
+    assert.strictEqual(transposeNote('A#', 1), 'B');
   });
 
   it('should transpose C# up by 1 semitone to D', () => {
@@ -185,6 +189,16 @@ describe('detectChordsInText', () => {
     assert.ok(chords.includes('C'));
   });
 
+  it('should detect sharp chords like A#', () => {
+    const chords = detectChordsInText('A# chord');
+    assert.ok(chords.includes('A#'));
+  });
+
+  it('should transpose A# chord correctly', () => {
+    const chords = detectChordsInText('A# chord');
+    assert.strictEqual(transposeChord(chords[0], 1), 'B');
+  });
+
   it('should detect multiple chords', () => {
     const chords = detectChordsInText('C F G7 C');
     assert.ok(chords.length > 0);
@@ -243,6 +257,20 @@ describe('transposeText', () => {
     const original = 'C F G Am';
     const result = transposeText(original, 0);
     assert.strictEqual(result, original);
+  });
+
+  it('should transpose A# correctly in text (A# + 1 = B, not A##)', () => {
+    const result = transposeText('The key is A#', 1);
+    assert.ok(result.includes('B'));
+    assert.ok(!result.includes('A##'));
+  });
+
+  it('should transpose sharp chords in text without creating double sharps', () => {
+    const result = transposeText('G# D# A#', 1);
+    assert.ok(result.includes('A'));
+    assert.ok(result.includes('D#') || result.includes('Eb'));
+    assert.ok(result.includes('B'));
+    assert.ok(!result.includes('##'));
   });
 });
 

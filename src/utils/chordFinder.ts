@@ -3,7 +3,8 @@
 import { transposeChord } from './chordTransposer';
 
 // Pattern to match chords with word boundaries (single # or b only)
-const CHORD_PATTERN = /\b([A-G](?:[#b])?(?:m(?:aj)?(?:7|9|11|13)?|min|dim|aug|sus[24]|add\d|7(?:b\d|#\d)?|maj\d?)?(?:\/[A-G](?:[#b])?)?)\b/g;
+// Use lookahead instead of \b at end since # is not a word character
+const CHORD_PATTERN = /\b([A-G](?:[#b])?(?:m(?:aj)?(?:7|9|11|13)?|min|dim|aug|sus[24]|add\d|7(?:b\d|#\d)?|maj\d?)?)(?:\/[A-G](?:[#b])?)?(?=\s|$|[^\w#])/g;
 
 /**
  * Check if a text node contains chords and transpose them

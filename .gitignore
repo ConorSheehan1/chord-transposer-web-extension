@@ -388,5 +388,8 @@ $RECYCLE.BIN/
 # etc
 .idea
 
-#generated manifest
+# generated manifest
 public/manifest.json
+
+# custom local test file. not required for automated tests, only local testing.
+test/test.html
