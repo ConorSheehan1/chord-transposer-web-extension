@@ -1,8 +1,16 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "types": ["vite/client", "node", "chrome"],
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": [
+      "vite/client",
+      "node",
+      "chrome"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -18,10 +26,18 @@
     "allowImportingTsExtensions": true,
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"],
-      "@assets/*": ["src/assets/*"],
-      "@pages/*": ["src/pages/*"],
-      "@utils/*": ["src/utils/*"]
+      "@src/*": [
+        "src/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ]
     }
   },
   "include": [
@@ -29,6 +45,7 @@
     "utils",
     "vite.config.base.ts",
     "vite.config.chrome.ts",
-    "vite.config.firefox.ts"
-, "test/chordTransposer.test.ts"  ],
+    "vite.config.firefox.ts",
+    // "test/chordTransposer.test.ts"
+  ],
 }
