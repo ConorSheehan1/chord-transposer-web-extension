@@ -36,14 +36,9 @@ export default function Popup() {
     });
   };
 
-  const direction = transposition > 0 ? 'Up' : 'Down';
-  const absValue = Math.abs(transposition);
-
   return (
-    <div className="w-80 p-6 bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg shadow-lg">
-      <h1 className="text-2xl font-bold mb-6 text-center">Chord Transposer</h1>
-
-      <div className="bg-blue-800 rounded-lg p-4 mb-6">
+    <div className="w-75 p-6 bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg shadow-lg">
+      <div className="bg-blue-800 rounded-lg p-2 mb-6">
         <label className="block text-sm font-semibold mb-3">Transpose by (semitones):</label>
 
         <div className="flex items-center gap-4">
@@ -70,14 +65,6 @@ export default function Popup() {
             +
           </button>
         </div>
-
-        <div className="mt-3 text-center text-sm text-blue-200">
-          {transposition === 0 ? (
-            <span>No transposition selected</span>
-          ) : (
-            <span>{direction} {absValue} semitone{absValue !== 1 ? 's' : ''}</span>
-          )}
-        </div>
       </div>
 
       <div className="space-y-3">
@@ -102,10 +89,6 @@ export default function Popup() {
           {message}
         </div>
       )}
-
-      <div className="mt-6 pt-4 border-t border-blue-600 text-xs text-blue-300 text-center">
-        <p>Set transposition amount and click "Transpose Chords"</p>
-      </div>
     </div>
   );
 }
