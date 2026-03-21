@@ -12,6 +12,22 @@ const NOTE_ALIASES: Record<string, string> = {
   'Bb': 'A#',
 };
 
+// Map of semitone index to all possible note names
+const SEMITONE_TO_NOTES: Record<number, string[]> = {
+  0: ['C'],
+  1: ['C#', 'Db'],
+  2: ['D'],
+  3: ['D#', 'Eb'],
+  4: ['E'],
+  5: ['F'],
+  6: ['F#', 'Gb'],
+  7: ['G'],
+  8: ['G#', 'Ab'],
+  9: ['A'],
+  10: ['A#', 'Bb'],
+  11: ['B'],
+};
+
 // Map of enharmonic equivalents (sharp to natural/flat)
 const ENHARMONIC_MAP: Record<string, string> = {
   'B#': 'C',
@@ -26,7 +42,10 @@ const ENHARMONIC_MAP: Record<string, string> = {
  * @param semitones - Number of semitones to transpose
  * @returns The transposed note
  */
-function transposeNote(note: string, semitones: number): string {
+export function transposeNote(note: string, semitones: number): string {
+  // Trim whitespace
+  note = note.trim();
+
   // Normalize flat notes to sharp equivalents
   let normalizedNote = note;
   if (normalizedNote.includes('b')) {
@@ -41,8 +60,38 @@ function transposeNote(note: string, semitones: number): string {
   }
 
   // Transpose the note
-  noteIndex = (noteIndex + semitones + NOTES.length * 2) % NOTES.length;
-  return NOTES[noteIndex];
+  noteIndex = ((noteIndex + semitones) % NOTES.length + NOTES.length) % NOTES.length;
+
+  // Get the transposed note's semitone value
+  const transposedSemitone = noteIndex;
+
+  // Determine if original used sharps or flats
+  const hadSharp = note.includes('#');
+  const hadFlat = note.includes('b');
+
+  // Get available names for this semitone
+  let possibleNames = SEMITONE_TO_NOTES[transposedSemitone];
+  if (!possibleNames || possibleNames.length === 0) {
+    possibleNames = [NOTES[transposedSemitone]];
+  }
+
+  // Fallback if still undefined
+  if (!possibleNames || possibleNames.length === 0) {
+    return NOTES[transposedSemitone] || note;
+  }
+
+  // Choose the representation:
+  // - If original had sharps, prefer sharp version
+  // - If original had flats, prefer flat version
+  // - Otherwise use the first available (usually natural or sharp)
+  if (hadFlat && possibleNames.length > 1 && possibleNames[possibleNames.length - 1]) {
+    // Prefer flat version for bass notes/transposed notes from flats
+    return possibleNames[possibleNames.length - 1]; // Flat is usually last
+  } else if (hadSharp && possibleNames[0] && possibleNames[0].includes('#')) {
+    return possibleNames[0]; // Sharp is usually first
+  }
+
+  return possibleNames[0] || NOTES[transposedSemitone] || note;
 }
 
 /**
@@ -62,8 +111,8 @@ export function transposeChord(chord: string, semitones: number): string {
 
   if (chord.includes('/')) {
     const parts = chord.split('/');
-    rootChord = parts[0];
-    bassNote = parts[1];
+    rootChord = parts[0].trim();
+    bassNote = parts[1].trim();
   }
 
   // Extract the root note and the rest of the chord
@@ -113,13 +162,18 @@ export function detectChordsInText(text: string): string[] {
 
   const chords = text.match(chordPattern) || [];
 
-  // Filter out single letters that are likely not chords
+  // Filter out single letters that are clearly not chords
+  // Accept: C, C#, Cm, C7, D/F#, etc.
+  // Reject: "a", "b", "c" (lowercase or single letters in middle of words)
   return chords.filter(chord => {
-    // Accept if it has a root note and a suffix
-    if (chord.length > 1) {
+    // Always accept if it has a suffix (m, 7, major, sus, etc.) or slash
+    if (chord.length > 1 && (chord[1] === '#' || chord[1] === 'b' || chord.includes('/') || /[m0-9]/.test(chord[1]))) {
       return true;
     }
-    // Accept single notes only if surrounded by whitespace or specific delimiters
+    // Accept single capital letters as chords (C, D, E, etc.)
+    if (chord.length === 1 && /[A-G]/.test(chord)) {
+      return true;
+    }
     return false;
   });
 }
