@@ -4,7 +4,7 @@ import { ManifestV3Export } from '@crxjs/vite-plugin';
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, BuildOptions } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths'
-import { stripDevIcons, crxI18n } from './custom-vite-plugins';
+import { stripDevIcons } from './custom-vite-plugins';
 import manifest from './manifest.json';
 import devManifest from './manifest.dev.json';
 import pkg from './package.json';
@@ -36,7 +36,6 @@ export default defineConfig({
     tsconfigPaths(),
     react(),
     stripDevIcons(isDev),
-    crxI18n({ localize, src: './src/locales' }),
   ],
   publicDir: resolve(__dirname, 'public'),
 });
