@@ -1,12 +1,11 @@
-name: Test
+name: Build and Zip Chrome Extension
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:
-  test:
-    name: Test
+  build:
+    name: Build
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -18,11 +17,17 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
-          node-version: 24
+          node-version: 18
           cache: 'yarn'
 
       - name: Install dependencies
         run: yarn
 
-      - name: Run tests
-        run: yarn test
+      - name: Build Chrome
+        run: yarn build:chrome
+
+      - name: Upload Chrome extension artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: vite-web-extension-chrome
+          path: dist_chrome
