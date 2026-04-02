@@ -6,7 +6,7 @@ declare const chrome: any;
 console.log('content script loaded');
 
 // Store original content for reset functionality
-let originalContent: Map<Element, string> = new Map();
+const originalContent: Map<Element, string> = new Map();
 
 interface TransposeMessage {
   type: 'TRANSPOSE_CHORDS' | 'RESET_CHORDS' | 'FIND_CHORDS';

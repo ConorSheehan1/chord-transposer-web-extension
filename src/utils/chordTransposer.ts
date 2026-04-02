@@ -28,14 +28,6 @@ const SEMITONE_TO_NOTES: Record<number, string[]> = {
   11: ['B'],
 };
 
-// Map of enharmonic equivalents (sharp to natural/flat)
-const ENHARMONIC_MAP: Record<string, string> = {
-  'B#': 'C',
-  'E#': 'F',
-  'F♭': 'E',
-  'C♭': 'B',
-};
-
 /**
  * Transposes a single note by the given number of semitones
  * @param note - The note to transpose (e.g., "C", "F#", "Bb")
