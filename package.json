@@ -14,8 +14,8 @@
     "dev": "nodemon --config nodemon.chrome.json",
     "dev:chrome": "nodemon --config nodemon.chrome.json",
     "dev:firefox": "nodemon --config nodemon.firefox.json",
-    "test": "node --test src/**/*.test.ts",
-    "test:watch": "node --watch-extensions ts --test src/**/*.test.ts"
+    "test": "node --test test/**/*.test.ts",
+    "test:watch": "node --test --watch test/**/*.test.ts"
   },
   "type": "module",
   "dependencies": {

@@ -268,7 +268,7 @@ describe('transposeText', () => {
   it('should transpose sharp chords in text without creating double sharps', () => {
     const result = transposeText('G# D# A#', 1);
     assert.ok(result.includes('A'));
-    assert.ok(result.includes('D#') || result.includes('Eb'));
+    assert.ok(result.includes('E'));
     assert.ok(result.includes('B'));
     assert.ok(!result.includes('##'));
   });
