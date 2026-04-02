@@ -1,7 +1,5 @@
-import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { ManifestV3Export } from '@crxjs/vite-plugin';
-import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, BuildOptions } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { stripDevIcons } from './custom-vite-plugins';
@@ -32,9 +30,7 @@ export const baseBuildOptions: BuildOptions = {
 
 export default defineConfig({
   plugins: [
-    tailwindcss(),
     tsconfigPaths(),
-    react(),
     stripDevIcons(isDev),
   ],
   publicDir: resolve(__dirname, 'public'),

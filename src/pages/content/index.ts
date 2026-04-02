@@ -59,4 +59,3 @@ chrome.runtime.onMessage.addListener((request: any, _sender: any, sendResponse: 
 });
 
 console.log('Chord transposer content script initialized');
-

@@ -22,7 +22,7 @@
         "<all_urls>"
       ],
       "js": [
-        "src/pages/content/index.tsx"
+        "src/pages/content/index.ts"
       ],
       "css": [
         "contentStyle.css"
