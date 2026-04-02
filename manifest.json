@@ -2,6 +2,14 @@
   "manifest_version": 3,
   "name": "Chord Transposer",
   "description": "Transpose chords on any webpage",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "chord-transposer@conorsheehan1.github.io",
+      "data_collection_permissions": {
+        "required": ["websiteContent"]
+      }
+    }
+  },
   "action": {
     "default_popup": "src/pages/popup/index.html",
     "default_icon": {
