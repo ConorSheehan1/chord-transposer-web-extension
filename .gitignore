@@ -385,6 +385,7 @@ $RECYCLE.BIN/
 /dist_chrome
 /dist_firefox
 /dist_zip_firefox
+/web-ext-artifacts
 
 # etc
 .idea

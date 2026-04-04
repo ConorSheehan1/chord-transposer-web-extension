@@ -29,5 +29,5 @@ jobs:
       - name: Upload Chrome extension artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: vite-web-extension-chrome
+          name: chord-transposer-web-extension
           path: dist_chrome

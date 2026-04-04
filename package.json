@@ -1,5 +1,5 @@
 {
-  "name": "vite-web-extension",
+  "name": "chord-transposer-web-extension",
   "version": "1.0.0",
   "description": "A chrome & firefox extension for transposing chords on webpages. Built with Vite and TypeScript.",
   "license": "MIT",
@@ -18,6 +18,7 @@
     "autoformat": "eslint . --fix",
     "lint:chrome": "web-ext lint --source-dir dist_chrome",
     "lint:firefox": "web-ext lint --source-dir dist_firefox",
+    "run:firefox-android": "yarn build:firefox && web-ext run --source-dir dist_firefox --target=firefox-android",
     "test": "node --test test/**/*.test.ts",
     "test:watch": "node --test --watch test/**/*.test.ts"
   },

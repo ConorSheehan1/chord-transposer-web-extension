@@ -27,5 +27,5 @@ jobs:
       - name: Run tests
         run: yarn test
 
-      - name: Run linters
-        run: yarn lint:chrome && yarn lint:firefox
+      - name: Lint firefox
+        run: yarn build:firefox && yarn lint:firefox
