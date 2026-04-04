@@ -1,4 +1,4 @@
-import '@pages/popup/index.css';
+import '@public/contentStyle.css';
 
 // Declare chrome API
 declare const chrome: any;

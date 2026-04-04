@@ -17,6 +17,7 @@
     "allowImportingTsExtensions": true,
     "baseUrl": ".",
     "paths": {
+      "@public/*": ["public/*"],
       "@src/*": ["src/*"],
       "@pages/*": ["src/pages/*"],
       "@utils/*": ["src/utils/*"]
