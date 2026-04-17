@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "name": "Chord Transposer",
   "description": "Transpose chords on any webpage",
+  "homepage_url": "https://github.com/ConorSheehan1/chord-transposer-web-extension",
   "browser_specific_settings": {
     "gecko": {
       "id": "chord-transposer@conorsheehan1.github.io",
