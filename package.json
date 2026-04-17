@@ -1,6 +1,6 @@
 {
   "name": "chord-transposer-web-extension",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A chrome & firefox extension for transposing chords on webpages. Built with Vite and TypeScript.",
   "license": "MIT",
   "repository": {
