@@ -148,3 +148,76 @@ input[type="number"]:focus {
     min-height: 5em;
   }
 }
+
+.chord-preview-container {
+  margin-top: 16px;
+}
+
+.chord-preview {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.chord-count {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.chord-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.chord-tag {
+  background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 153, 255, 0.3);
+}
+
+.chord-expand-btn,
+.chord-collapse-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.3) 0%, rgba(0, 153, 255, 0.3) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.5);
+  border-radius: 6px;
+  color: #00d4ff;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chord-expand-btn:hover,
+.chord-collapse-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.5) 0%, rgba(0, 153, 255, 0.5) 100%);
+  border-color: rgba(0, 212, 255, 0.8);
+}
+
+.chord-preview-error {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(255, 87, 108, 0.2) 100%);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255, 107, 107, 0.4);
+  text-align: center;
+}
+
+.chord-preview-error p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 107, 107, 0.9);
+  font-weight: 500;
+}

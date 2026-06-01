@@ -5,6 +5,69 @@ declare const chrome: any;
 
 let transposition = 0;
 let messageTimeout: number | null = null;
+let detectedChords: string[] = [];
+let showAllChords = false;
+
+function detectChords(): void {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs: any[]) => {
+    if (tabs[0].id) {
+      chrome.tabs.sendMessage(
+        tabs[0].id,
+        { type: 'FIND_CHORDS' },
+        (response: any) => {
+          if (response && response.success) {
+            detectedChords = response.chords || [];
+            renderChordPreview();
+          } else {
+            detectedChords = [];
+            renderChordPreview();
+          }
+        }
+      );
+    }
+  });
+}
+
+function renderChordPreview(): void {
+  const container = document.querySelector('.chord-preview-container');
+  if (!container) return;
+
+  if (detectedChords.length === 0) {
+    container.innerHTML = `
+      <div class="chord-preview-error">
+        <p>No chords detected on this page</p>
+      </div>
+    `;
+    return;
+  }
+
+  const displayChords = showAllChords ? detectedChords : detectedChords.slice(0, 8);
+  const hasMore = detectedChords.length > 8;
+
+  container.innerHTML = `
+    <div class="chord-preview">
+      <p class="chord-count">Found ${detectedChords.length} chord${detectedChords.length !== 1 ? 's' : ''}</p>
+      <div class="chord-list">
+        ${displayChords.map(chord => `<span class="chord-tag">${chord}</span>`).join('')}
+      </div>
+      ${hasMore && !showAllChords ? `<button class="chord-expand-btn">Show all ${detectedChords.length} chords</button>` : ''}
+      ${showAllChords ? `<button class="chord-collapse-btn">Show less</button>` : ''}
+    </div>
+  `;
+
+  const expandBtn = container.querySelector('.chord-expand-btn');
+  const collapseBtn = container.querySelector('.chord-collapse-btn');
+
+  expandBtn?.addEventListener('click', () => {
+    showAllChords = true;
+    renderChordPreview();
+  });
+
+  collapseBtn?.addEventListener('click', () => {
+    showAllChords = false;
+    renderChordPreview();
+  });
+}
 
 function showMessage(text: string): void {
   const root = document.querySelector('#__root');
@@ -108,6 +171,7 @@ function init(): void {
         <button class="button-transpose" disabled>Transpose Chords</button>
         <button class="button-reset">Reset</button>
       </div>
+      <div class="chord-preview-container"></div>
     </div>
   `;
 
@@ -117,6 +181,9 @@ function init(): void {
   document.querySelector('input[type="number"]')?.addEventListener('change', handleInputChange);
   document.querySelector('.button-transpose')?.addEventListener('click', handleTranspose);
   document.querySelector('.button-reset')?.addEventListener('click', handleReset);
+
+  // Detect chords on load
+  detectChords();
 }
 
 init();
