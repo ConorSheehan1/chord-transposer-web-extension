@@ -9,3 +9,11 @@ Next click load temporary add-on at [about:debugging#/runtime/this-firefox](abou
 Select `/dist_firefox/manifest.json`.
 
 You will see add-on with the dev banner custom icon.
+
+# Publishing
+```
+yarn version
+yarn build:firefox
+yarn zip:firefox
+yarn publish-extension --firefox-zip dist_zip/chord-transposer-firefox.zip --firefox-sources-zip dist_zip/chord-transposer-src.zip
+```
