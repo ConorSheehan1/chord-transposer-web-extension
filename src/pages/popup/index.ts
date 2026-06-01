@@ -6,6 +6,7 @@ declare const chrome: any;
 let transposition = 0;
 let messageTimeout: number | null = null;
 let detectedChords: string[] = [];
+let contentScriptFailed = false;
 let showAllChords = false;
 
 function detectChords(): void {
@@ -15,7 +16,15 @@ function detectChords(): void {
         tabs[0].id,
         { type: 'FIND_CHORDS' },
         (response: any) => {
+          const runtimeError = chrome.runtime?.lastError;
+          contentScriptFailed = Boolean(runtimeError);
+          if (runtimeError) {
+            detectedChords = [];
+            renderChordPreview();
+            return;
+          }
           if (response && response.success) {
+            contentScriptFailed = false;
             detectedChords = response.chords || [];
             renderChordPreview();
           } else {
@@ -33,9 +42,17 @@ function renderChordPreview(): void {
   if (!container) return;
 
   if (detectedChords.length === 0) {
+    const heading = contentScriptFailed
+      ? 'The chord scanner did not initialize on this page.'
+      : 'No chords detected on this page';
     container.innerHTML = `
       <div class="chord-preview-error">
-        <p>No chords detected on this page</p>
+        <p>${heading}</p>
+        <ul>
+          <li>Reload the page</li>
+          <li>Reload the extension</li>
+        </ul>
+        ${contentScriptFailed ? '' : `<p>If the issue persists, <a href="https://github.com/ConorSheehan1/chord-transposer-web-extension/issues/new?template=bug_report.md">create an issue report.</a></p>`}
       </div>
     `;
     return;

@@ -228,7 +228,7 @@ input[type="number"]:focus {
   border-radius: 12px;
   padding: 16px;
   border: 1px solid rgba(255, 107, 107, 0.4);
-  text-align: center;
+  text-align: left;
 }
 
 .chord-preview-error p {
@@ -236,6 +236,26 @@ input[type="number"]:focus {
   font-size: 14px;
   color: rgba(255, 107, 107, 0.9);
   font-weight: 500;
+}
+
+ .chord-preview-error ul {
+  margin: 12px 0 0 1.2rem;
+  padding-left: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+ .chord-preview-error li {
+  margin-bottom: 0.5rem;
+}
+
+ .chord-preview-error a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+ .chord-preview-error a:hover {
+  color: #e0f7ff;
 }
 
 .ignore-settings-container {
