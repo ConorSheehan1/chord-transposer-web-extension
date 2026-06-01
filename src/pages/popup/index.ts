@@ -153,6 +153,14 @@ function handleInputChange(event: Event): void {
   updateDisplay();
 }
 
+function openOptionsPage(): void {
+  if (chrome.runtime.openOptionsPage) {
+    chrome.runtime.openOptionsPage();
+  } else {
+    window.open(chrome.runtime.getURL('src/pages/options/index.html'), '_blank');
+  }
+}
+
 function init(): void {
   const root = document.querySelector('#__root');
   if (!root) throw new Error("Can't find Popup root element");
@@ -172,6 +180,7 @@ function init(): void {
         <button class="button-reset">Reset</button>
       </div>
       <div class="chord-preview-container"></div>
+      <button class="button-options">Extension settings</button>
     </div>
   `;
 
@@ -181,6 +190,7 @@ function init(): void {
   document.querySelector('input[type="number"]')?.addEventListener('change', handleInputChange);
   document.querySelector('.button-transpose')?.addEventListener('click', handleTranspose);
   document.querySelector('.button-reset')?.addEventListener('click', handleReset);
+  document.querySelector('.button-options')?.addEventListener('click', openOptionsPage);
 
   // Detect chords on load
   detectChords();

@@ -101,6 +101,22 @@ input[type="number"]:focus {
   gap: 12px;
 }
 
+.button-options {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 153, 255, 0.15) 100%);
+  color: #e0f7ff;
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.button-options:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.3) 0%, rgba(0, 153, 255, 0.3) 100%);
+}
+
 .button-transpose {
   width: 100%;
   padding: 12px;
@@ -220,4 +236,122 @@ input[type="number"]:focus {
   font-size: 14px;
   color: rgba(255, 107, 107, 0.9);
   font-weight: 500;
+}
+
+.ignore-settings-container {
+  margin-top: 16px;
+}
+
+.ignore-settings {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.settings-label {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.settings-toggle-btn {
+  background: none;
+  border: none;
+  color: #00d4ff;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.settings-content {
+  margin-top: 12px;
+}
+
+.ignore-class-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ignore-class-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.ignore-class-name {
+  font-weight: 500;
+  color: #00d4ff;
+  word-break: break-all;
+}
+
+.remove-class-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 107, 107, 0.8);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 4px;
+  margin-left: 8px;
+}
+
+.remove-class-btn:hover {
+  color: rgba(255, 107, 107, 1);
+}
+
+.add-ignore-class {
+  display: flex;
+  gap: 8px;
+}
+
+.ignore-class-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 6px;
+  background: rgba(44, 83, 100, 0.5);
+  color: white;
+  font-size: 12px;
+}
+
+.ignore-class-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ignore-class-input:focus {
+  outline: none;
+  border-color: rgba(0, 212, 255, 0.6);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+}
+
+.add-class-btn {
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-class-btn:hover {
+  box-shadow: 0 4px 12px rgba(0, 153, 255, 0.4);
 }
