@@ -141,6 +141,10 @@ input[type="number"]:focus {
   box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
 }
 
+.message-wrapper {
+  margin-top: 16px;
+}
+
 .message {
   margin-top: 16px;
   padding: 12px;
@@ -151,6 +155,18 @@ input[type="number"]:focus {
   font-weight: 600;
   border: 1px solid rgba(0, 153, 255, 0.5);
   backdrop-filter: blur(10px);
+}
+
+.message.success {
+  background: linear-gradient(135deg, rgba(87, 255, 156, 0.25) 0%, rgba(47, 196, 100, 0.3) 100%);
+  border-color: rgba(87, 255, 156, 0.5);
+  color: #e7ffe9;
+}
+
+.message.error {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.25) 0%, rgba(255, 75, 75, 0.3) 100%);
+  border-color: rgba(255, 107, 107, 0.5);
+  color: #ffeaea;
 }
 
 @media only screen and (min-device-width: 480px) {
@@ -185,11 +201,71 @@ input[type="number"]:focus {
   color: rgba(255, 255, 255, 0.9);
 }
 
+.transposed-preview-wrapper {
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.transposed-preview-wrapper .chord-list {
+  gap: 6px;
+}
+
+.transposed-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.transposed-preview-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.chord-preview-note {
+  margin: 0 0 10px 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.preview-more {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  align-self: center;
+}
+
+.transposed-preview-body.collapsed {
+  display: none;
+}
+
+.chord-preview-section {
+  margin-bottom: 12px;
+}
+
+.chord-section-title {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #d7f3ff;
+}
+
 .chord-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 12px;
+}
+
+.detected-chords-section {
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
 }
 
 .chord-tag {
