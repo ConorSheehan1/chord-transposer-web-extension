@@ -131,6 +131,7 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
+.env.submit
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -395,3 +396,6 @@ public/manifest.json
 
 # custom local test file. not required for automated tests, only local testing.
 test/test.html
+
+# temp screenshot
+docs/screenshot-firefox-android-chord-transposer.jpg
