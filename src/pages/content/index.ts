@@ -1,16 +1,30 @@
-import { transposeElement, findChordsInElement } from '@utils/chordFinder';
+import { transposeElement, findChordsInElement, ignoreConfig } from '@utils/chordFinder';
 
 // Declare chrome API
 declare const chrome: any;
 
 console.log('content script loaded');
 
+function loadIgnoreClasses(): void {
+  const storageArea = chrome.storage?.sync || chrome.storage?.local;
+  if (!storageArea) return;
+
+  storageArea.get({ ignoreClasses: ['NC05z'] }, (result: any) => {
+    if (result && Array.isArray(result.ignoreClasses)) {
+      ignoreConfig.containerClasses = result.ignoreClasses;
+    }
+  });
+}
+
+loadIgnoreClasses();
+
 // Store original content for reset functionality
 const originalContent: Map<Element, string> = new Map();
 
 interface TransposeMessage {
-  type: 'TRANSPOSE_CHORDS' | 'RESET_CHORDS' | 'FIND_CHORDS';
+  type: 'TRANSPOSE_CHORDS' | 'RESET_CHORDS' | 'FIND_CHORDS' | 'UPDATE_IGNORE_CLASSES';
   semitones?: number;
+  ignoreClasses?: string[];
 }
 
 // Listen for messages from the popup
@@ -53,7 +67,14 @@ chrome.runtime.onMessage.addListener((request: any, _sender: any, sendResponse: 
     const chords = findChordsInElement(document.body);
     sendResponse({
       success: true,
-      chords: Array.from(chords)
+      chords
+    });
+  } else if (msg.type === 'UPDATE_IGNORE_CLASSES') {
+    // Update ignore classes
+    ignoreConfig.containerClasses = msg.ignoreClasses || [];
+    sendResponse({
+      success: true,
+      message: 'Ignore classes updated'
     });
   }
 });

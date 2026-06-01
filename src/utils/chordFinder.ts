@@ -6,6 +6,48 @@ import { transposeChord } from './chordTransposer';
 // Use lookahead instead of \b at end since # is not a word character
 const CHORD_PATTERN = /\b([A-G](?:[#b])?(?:m(?:aj)?(?:7|9|11|13)?|min|dim|aug|sus[24]|add\d|7(?:b\d|#\d)?|maj\d?)?)(?:\/[A-G](?:[#b])?)?(?=\s|$|[^\w#])/g;
 
+// Configurable ignore rules
+export const ignoreConfig = {
+  containerClasses: ['NC05z'] // Classes of containers to ignore
+};
+
+/**
+ * Check if an element should be skipped based on ignore rules
+ * @param element - Element to check
+ * @returns true if element should be ignored
+ */
+function shouldIgnoreElement(element: Element): boolean {
+  // Check if element or any parent has an ignored class
+  let current: Element | null = element;
+  while (current) {
+    for (const className of ignoreConfig.containerClasses) {
+      if (current.classList.contains(className)) {
+        return true;
+      }
+    }
+    current = current.parentElement;
+  }
+  return false;
+}
+
+/**
+ * Add a class to the ignore list
+ * @param className - Class name to ignore
+ */
+export function addIgnoreClass(className: string): void {
+  if (!ignoreConfig.containerClasses.includes(className)) {
+    ignoreConfig.containerClasses.push(className);
+  }
+}
+
+/**
+ * Remove a class from the ignore list
+ * @param className - Class name to stop ignoring
+ */
+export function removeIgnoreClass(className: string): void {
+  ignoreConfig.containerClasses = ignoreConfig.containerClasses.filter(c => c !== className);
+}
+
 /**
  * Check if a text node contains chords and transpose them
  * @param node - Text node to process
@@ -56,7 +98,7 @@ export function transposeElement(element: Element, semitones: number): number {
   // Second pass: process nodes
   for (const textNode of nodesToProcess) {
     const parent = textNode.parentElement;
-    if (parent && !SKIP_TAGS.has(parent.tagName)) {
+    if (parent && !SKIP_TAGS.has(parent.tagName) && !shouldIgnoreElement(parent)) {
       if (transposeTextNode(textNode, semitones)) {
         modifiedCount++;
       }
@@ -67,12 +109,12 @@ export function transposeElement(element: Element, semitones: number): number {
 }
 
 /**
- * Find all unique chords in an element
+ * Find chords in an element in the order they appear on the page
  * @param element - DOM element to search
- * @returns Set of unique chords found
+ * @returns Ordered list of chords found, including duplicates
  */
-export function findChordsInElement(element: Element): Set<string> {
-  const chords = new Set<string>();
+export function findChordsInElement(element: Element): string[] {
+  const chords: string[] = [];
   const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT']);
 
   const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null);
@@ -80,11 +122,11 @@ export function findChordsInElement(element: Element): Set<string> {
   let node;
   while ((node = walker.nextNode())) {
     const parent = (node as Text).parentElement;
-    if (parent && !SKIP_TAGS.has(parent.tagName)) {
+    if (parent && !SKIP_TAGS.has(parent.tagName) && !shouldIgnoreElement(parent)) {
       const text = (node as Text).textContent || '';
       const matches = text.match(CHORD_PATTERN);
       if (matches) {
-        matches.forEach(chord => chords.add(chord));
+        chords.push(...matches);
       }
     }
   }
@@ -112,7 +154,7 @@ export function highlightChords(element: Element, className: string = 'chord-hig
   // Process in reverse to maintain correct positions
   for (const textNode of nodesToProcess.reverse()) {
     const parent = textNode.parentElement;
-    if (parent && !SKIP_TAGS.has(parent.tagName)) {
+    if (parent && !SKIP_TAGS.has(parent.tagName) && !shouldIgnoreElement(parent)) {
       const text = textNode.textContent || '';
 
       if (CHORD_PATTERN.test(text)) {

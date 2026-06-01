@@ -1,0 +1,122 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-width: 300px;
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  color: white;
+}
+
+#__root {
+  padding: 24px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.description {
+  margin: 0 0 16px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ignore-class-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ignore-class-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.ignore-class-name {
+  color: #00d4ff;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.remove-class-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 107, 107, 0.9);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ignore-class-input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  background: rgba(44, 83, 100, 0.5);
+  color: white;
+}
+
+.add-class-btn,
+.save-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-class-btn:hover,
+.save-btn:hover {
+  box-shadow: 0 4px 14px rgba(0, 153, 255, 0.4);
+}
+
+.meta {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.message {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  color: #fff;
+}

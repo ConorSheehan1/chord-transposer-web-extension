@@ -19,11 +19,16 @@
       "32": "icon-32.png"
     }
   },
+  "options_ui": {
+    "page": "src/pages/options/index.html",
+    "open_in_tab": false
+  },
   "icons": {
     "128": "icon-128.png"
   },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
   "content_scripts": [
     {
